@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="79630eea-dd25-4a88-aed8-7b1c9b211637" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/controllers/AccountController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/controllers/AuthController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/controllers/CategoryController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/controllers/EntityController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/controllers/TransactionController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/controllers/UserDetailsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/data/ModelManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/data/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/data/conection/ConnectionFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/data/entity/Account.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/data/entity/Category.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/data/entity/CategoryDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/data/entity/Entidade.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/data/entity/Transaction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/data/entity/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/exception/ApiException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/payload/AccountDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/payload/AuthResponseDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/payload/EntityDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/payload/ErrorDetails.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/payload/UserDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/payload/request/LoginRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/payload/request/RegisterRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/payload/request/TransationDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/payload/response/GeneralResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/payload/response/ListTransactionResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/payload/response/TransactionResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/repository/AccountRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/repository/CategoryRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/repository/EntidadeRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/repository/TransactionRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/repository/UserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/security/AuthenticationFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/security/AuthorizationFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/security/CustomUserDetails.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/security/JwtTokenProvider.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/security/WebSecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/service/AuthService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/service/JwtTokenService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend-finances-jpa/src/main/java/com/backendfinancesjpa/service/ProxyService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../finances-backend/src/main/java/com/finances/backend/data/entity/Entity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../finances-backend/src/main/java/com/finances/backend/data/sevices/SqlEntityService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../finances-backend/src/main/java/com/finances/backend/payload/EntityDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../finances/lib/LoggedPages/AddTransactionPage.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../finances/lib/LoggedPages/SettingsPage.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../finances/lib/LoggedPages/TransactionsPage.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../finances/lib/LoggedPages/settingsPages/ManageAccount.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../finances/lib/LoggedPages/settingsPages/ManageCategory.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../finances/lib/LoggedPages/settingsPages/ManageEntityPage.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../finances/lib/LoggedPages/settingsPages/SettingsHomePage.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../finances/lib/data/Account.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../finances/lib/data/Category.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../finances/lib/data/Entity.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../finances/lib/data/Transaction.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../finances/lib/data/TransactionResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../finances/lib/data/comparators/TransactionComparator.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../finances/lib/utils/DialogFunctions.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../finances/lib/utils/RequestFunctions.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../finances/lib/utils/TranslateData.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../finances-backend/src/main/java/com/finances/backend/controllers/AccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../finances-backend/src/main/java/com/finances/backend/controllers/AccountController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../finances-backend/src/main/java/com/finances/backend/controllers/CategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../finances-backend/src/main/java/com/finances/backend/controllers/CategoryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../finances-backend/src/main/java/com/finances/backend/controllers/TransactionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../finances-backend/src/main/java/com/finances/backend/controllers/TransactionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../finances-backend/src/main/java/com/finances/backend/data/ModelManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../finances-backend/src/main/java/com/finances/backend/data/ModelManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../finances-backend/src/main/java/com/finances/backend/data/entity/CategoryDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../finances-backend/src/main/java/com/finances/backend/data/entity/CategoryDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../finances-backend/src/main/java/com/finances/backend/data/entity/Transaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/../finances-backend/src/main/java/com/finances/backend/data/entity/Transaction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../finances-backend/src/main/java/com/finances/backend/data/sevices/SqlAcountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../finances-backend/src/main/java/com/finances/backend/data/sevices/SqlAcountService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../finances-backend/src/main/java/com/finances/backend/data/sevices/SqlCategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../finances-backend/src/main/java/com/finances/backend/data/sevices/SqlCategoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../finances-backend/src/main/java/com/finances/backend/data/sevices/SqlTransationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../finances-backend/src/main/java/com/finances/backend/data/sevices/SqlTransationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../finances-backend/src/main/java/com/finances/backend/payload/request/TransationDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../finances-backend/src/main/java/com/finances/backend/payload/request/TransationDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../finances-backend/src/main/java/com/finances/backend/payload/response/GeneralResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/../finances-backend/src/main/java/com/finances/backend/payload/response/GeneralResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../finances-backend/src/main/java/com/finances/backend/payload/response/ListTransactionResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/../finances-backend/src/main/java/com/finances/backend/payload/response/ListTransactionResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../finances-backend/src/main/java/com/finances/backend/service/ProxyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../finances-backend/src/main/java/com/finances/backend/service/ProxyService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../finances/lib/LoggedPages/Home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../../finances/lib/LoggedPages/Home.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../finances/lib/data/Data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../../finances/lib/data/Data.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../finances/lib/data/GeneralResponse.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../../finances/lib/data/GeneralResponse.dart" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2DXl4oDVgiqPDAS35mLZCIFbOjN" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;
+  }
+}</component>
+  <component name="RunManager">
+    <configuration name="FinancesBackendJpaApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="ACTIVE_PROFILES" />
+      <module name="finances-backend-jpa" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.financesbackendjpa.FinancesBackendJpaApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="79630eea-dd25-4a88-aed8-7b1c9b211637" name="Changes" comment="" />
+      <created>1660853124025</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1660853124025</updated>
+      <workItem from="1660853125365" duration="215000" />
+      <workItem from="1660853357095" duration="600000" />
+      <workItem from="1660918262244" duration="12000" />
+      <workItem from="1660918286866" duration="4000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

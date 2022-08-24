@@ -6,10 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class SqlAcountService {
@@ -225,6 +222,31 @@ public class SqlAcountService {
                 ConnectionFactory.closeStatement(stm);
         }
         return costs;
+
+    }
+
+    public List<Account> getAccountsByUserId(Long idUser, Connection connection) {
+        List<Account> list = new ArrayList<>();
+        PreparedStatement stm = null;
+        String query = "SELECT * from Account where ? = Account.id_user";
+
+        try {
+            stm = connection.prepareStatement(query);
+            stm.setLong(1, idUser);
+            stm.execute();
+            ResultSet res = stm.getResultSet();
+            while (res.next()){
+                list.add(getAccountFromResultSetWithoutUser(res));
+            }
+
+        }catch (SQLException e){
+            return null;
+        }finally {
+            if(stm != null)
+                ConnectionFactory.closeStatement(stm);
+        }
+
+        return list;
 
     }
 }

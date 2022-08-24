@@ -1,6 +1,8 @@
 package com.finances.backend.controllers;
 
+import com.finances.backend.data.entity.Account;
 import com.finances.backend.exception.ApiException;
+import com.finances.backend.payload.AccountDto;
 import com.finances.backend.payload.request.TransationDto;
 import com.finances.backend.payload.response.ListTransactionResponse;
 import com.finances.backend.payload.response.TransactionResponse;
@@ -53,12 +55,14 @@ public class TransactionController {
             }
         }
         list = proxy.getTransactionWithSortAndPagination(month, year, order,orderField, pageSize, pageNumber, token);
+        List<AccountDto> listAccount = proxy.getAccounts(token);
         ListTransactionResponse response = new ListTransactionResponse();
-        if(list != null) {
+        if(list != null && listAccount != null) {
             response.setTransactionResponses(list);
             response.setSize(list.size());
             response.setPagination(true);
             response.setLastPage(list.size() != pageSize);
+            response.setAccounts(listAccount);
         }
 
         return new ResponseEntity<>(response, HttpStatus.OK);

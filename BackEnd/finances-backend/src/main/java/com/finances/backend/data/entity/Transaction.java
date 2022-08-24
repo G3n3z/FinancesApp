@@ -21,5 +21,6 @@ public class Transaction {
     Account account;
     User user;
     Category category;
+    Entity entity;
 
 }

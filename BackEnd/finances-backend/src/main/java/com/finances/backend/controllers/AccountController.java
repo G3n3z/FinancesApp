@@ -19,7 +19,6 @@ public class AccountController {
         String token = header.substring(7);
         AccountDto response = proxy.createAccount(token, accountDto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
-
     }
 
 }

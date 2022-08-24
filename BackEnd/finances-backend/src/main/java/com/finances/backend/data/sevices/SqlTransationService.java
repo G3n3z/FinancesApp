@@ -6,7 +6,6 @@ import com.finances.backend.data.entity.Transaction;
 import com.finances.backend.payload.request.TransationDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.sql.*;
@@ -26,12 +25,15 @@ public class SqlTransationService {
     @Autowired
     SqlAcountService acountService;
 
-    public Long registTransition(TransationDto dto, long userId, long accountId, long categoryId, Connection connection){
+    @Autowired
+    SqlEntityService entityService;
+
+    public Long registTransition(TransationDto dto, long userId, long accountId, long categoryId, long idEntity, Connection connection){
         PreparedStatement stm = null;
         try {
 
-            String query = "INSERT INTO transation(name_transaction, date, amount, id_user, id_account, id_category) values " +
-                    "(?,?,?,?,?,?)";
+            String query = "INSERT INTO transation(name_transaction, date, amount, id_user, id_account, id_category, id_entity) values " +
+                    "(?,?,?,?,?,?, ?)";
             stm = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             stm.setString(1, dto.getName());
             stm.setString(2, dto.getData());
@@ -39,6 +41,7 @@ public class SqlTransationService {
             stm.setLong(4,userId);
             stm.setLong(5,accountId);
             stm.setLong(6,categoryId);
+            stm.setLong(7,idEntity);
 
             stm.execute();
             ResultSet res = stm.getGeneratedKeys();
@@ -100,15 +103,16 @@ public class SqlTransationService {
         try {
 
             String query = "Select * " +
-                    "from transation, Categories, Account " +
+                    "from transation, Categories, Account, entities " +
                     "where transation.id_user = ? " +
                     "and transation.id_account = Account.id_account \n" +
                     "and Categories.id_category = transation.id_category \n" +
-                    "and DATE_FORMAT(transation.date, '%Y-%m') = ?";
+                    "and transation.id_entity = entities.id_entity \n" +
+                    "and DATE_FORMAT(transation.date, '%Y-%m') >= ?";
             if(order.equals("asc"))
-                query = query + " order by " + orderField + " Limit ?, ?";
+                query = query + " order by " + orderField + ", transation.id_transation  "+  " Limit ?, ?";
             else {
-                query = query + " order by " + orderField + " desc Limit ?, ?";
+                query = query + " order by " + orderField + " desc ," + "transation.id_transation desc " + "Limit ?, ?";
             }
             month--;
             Calendar calendar = new GregorianCalendar(year, month, 1);
@@ -159,6 +163,7 @@ public class SqlTransationService {
             transaction.setName(res.getString("name_transaction"));
             transaction.setAccount(acountService.getAccountFromResultSetWithoutUser(res));
             transaction.setCategory(categoryService.getCategoryFromResultSet(res));
+            transaction.setEntity(entityService.getEntityFromResultSet(res));
             return transaction;
         }catch (Exception e ){
             return null;

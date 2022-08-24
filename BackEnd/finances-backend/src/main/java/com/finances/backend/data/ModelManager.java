@@ -2,12 +2,10 @@ package com.finances.backend.data;
 
 import com.finances.backend.data.conection.ConnectionFactory;
 import com.finances.backend.data.entity.*;
-import com.finances.backend.data.sevices.SqlAcountService;
-import com.finances.backend.data.sevices.SqlCategoryService;
-import com.finances.backend.data.sevices.SqlTransationService;
-import com.finances.backend.data.sevices.SqlUserService;
+import com.finances.backend.data.sevices.*;
 import com.finances.backend.exception.ApiException;
 import com.finances.backend.payload.AccountDto;
+import com.finances.backend.payload.EntityDto;
 import com.finances.backend.payload.UserDto;
 import com.finances.backend.payload.request.TransationDto;
 
@@ -19,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class ModelManager {
@@ -29,12 +28,15 @@ public class ModelManager {
     private SqlUserService userService;
     private SqlCategoryService categoryService;
 
+    private SqlEntityService entityService;
+
     public ModelManager(SqlTransationService transationService, SqlAcountService acountService,
-                        SqlUserService userService, SqlCategoryService categoryService) {
+                        SqlUserService userService, SqlCategoryService categoryService, SqlEntityService entityService) {
         this.transationService = transationService;
         this.acountService = acountService;
         this.userService = userService;
         this.categoryService = categoryService;
+        this.entityService = entityService;
     }
 
     public boolean loginIsCorrect(String email, String password) {
@@ -55,6 +57,11 @@ public class ModelManager {
         user = userService.registerUser(user, con);
         if(user != null) {
             if(acountService.registerDefaultAccount(user.getId(), con)){
+                categoryService.insertRelationshipBetweenUserAndCategory(1L,user.getId() ,con);
+                if(!entityService.createDefaultEntities(con, user.getId())){
+                    ConnectionFactory.commit(con);
+                    entityService.createDefaultEntities(con, user.getId());
+                }
                 ConnectionFactory.commit(con);
                 return true;
             }else {
@@ -193,17 +200,20 @@ public class ModelManager {
         long userId = user.getId();
         Account accountId = acountService.getAccountByIdAndNameAccount(userId,request.getAccount(), connection);
         long categoryID = categoryService.getUserCategoryByCategoryNameAndUserId(request.getCategory(), userId);
-
+        Entity entity = entityService.getEntityByNameAndUserID(connection, userId, request.getEntity());
         if(categoryID != -1)
         {
-            Long transitionId = transationService.registTransition(request, userId, accountId.getId(), categoryID, connection);
+            Long transitionId = transationService.registTransition(request, userId, accountId.getId(), categoryID, entity.getId(), connection);
             if (transitionId != null) {
                 acountService.updateAccount(request.getAmount(), userId, accountId.getName(), connection);
+
                 ConnectionFactory.commit(connection);
                 return;
-            }else {
-                throw new ApiException("Data of transaction is corrupted" , HttpStatus.BAD_REQUEST);
+
             }
+            ConnectionFactory.rollback(connection);
+            throw new ApiException("Data of transaction is corrupted" , HttpStatus.BAD_REQUEST);
+
         }
         ConnectionFactory.rollback(connection);
         throw new ApiException("Dont exists " + request.getCategory() + " in " + email + " account", HttpStatus.BAD_REQUEST);
@@ -252,7 +262,7 @@ public class ModelManager {
         for (Transaction transaction : list) {
             listDto.add(mapToTransactioDto(transaction));
         }
-
+        ConnectionFactory.closeConnection(connection);
         return listDto;
     }
 
@@ -261,7 +271,7 @@ public class ModelManager {
             return null;
         }
         return new TransationDto(transaction.getName(),transaction.getCategory().getName(),transaction.getAccount().getName(),
-                transaction.getDate().toString(), transaction.getAmount());
+                transaction.getDate().toString(),transaction.getEntity().getName() ,transaction.getAmount() );
     }
 
     public double getAmountTotal(Long idUser) {
@@ -307,4 +317,61 @@ public class ModelManager {
         return costs;
 
     }
+
+    public List<AccountDto> getAccounts(Long idUser) {
+        List<AccountDto> accountDtos = new ArrayList<>();
+        Connection connection;
+        try {
+            connection = ConnectionFactory.getConection();
+        } catch (SQLException e) {
+            throw new ApiException("Problems with Server Database", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        List<Account> accounts = acountService.getAccountsByUserId(idUser, connection);
+        if(accounts != null){
+            for (Account account : accounts) {
+                accountDtos.add(mapToAccountDto(account));
+            }
+        }
+
+        return accountDtos;
+    }
+
+    private AccountDto mapToAccountDto(Account account) {
+        return new AccountDto(account.getName(), account.getBalance());
+    }
+
+    public List<CategoryDto> getCategories(Long idUser) {
+        Connection connection;
+        try {
+            connection = ConnectionFactory.getConection();
+        } catch (SQLException e) {
+            throw new ApiException("Problems with Server Database", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        List<Category> categories =  categoryService.getCategoriesByUserID(idUser, connection);
+
+        return categories.stream().map(this::mapToCategoryDto).collect(Collectors.toList());
+    }
+
+    private CategoryDto mapToCategoryDto(Category category){
+        return new CategoryDto(category.getName());
+    }
+
+    public List<EntityDto> getEntities(Long idUser) {
+
+        Connection connection;
+        try {
+            connection = ConnectionFactory.getConection();
+        } catch (SQLException e) {
+            throw new ApiException("Problems with Server Database", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        List<Entity> entities = entityService.getEntitiesByUserId(idUser, connection);
+
+        return entities.stream().map(this::mapToEntityDto).collect(Collectors.toList());
+    }
+
+    public EntityDto mapToEntityDto(Entity entity){
+        return new EntityDto(entity.getName());
+    }
+
 }

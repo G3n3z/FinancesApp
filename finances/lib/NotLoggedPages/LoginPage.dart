@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:finances/LoggedPages/Home.dart';
 import 'package:finances/data/Data.dart';
 import 'package:finances/data/Token.dart';
+import 'package:finances/utils/DialogFunctions.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -34,13 +36,16 @@ class _LoginPage extends State<LoginPage>{
       setState(() {
         _validate = false;
       });
-
+      bool buttonCancelClicked = false;
+      Timer.run(() => showDialogg(context));
       Token? token = await login();
-
       //print(token!.token);
+      Navigator.of(context).pop();
       if(token == null){
+        showDialogError(context, "Email or Password Incorrect");
         return;
       }
+
 
       Data data = Data( _email.text, _password.text);
       data.token= token;
@@ -55,21 +60,24 @@ class _LoginPage extends State<LoginPage>{
     var body =  jsonEncode(<String, String>{
     'email' : 'daniel@gmail.com',//_email.text,
     'password' : 'abc'});
-
+    final Response respose;
     print(body);
-
-    final Response respose = await http.post(Uri.parse(Data.urlBackend + '/auth/login'),
-      headers: <String, String> {
-        'Content-Type': 'application/json',
-        'Authorization': 'asdasd'
-      },
-      body: jsonEncode(<String, String>{
-          'email' : _email.text,
-          'password' : _password.text
-        },
-      )
-
-    );
+    try {
+          respose = await http.post(
+          Uri.parse(Data.urlBackend + '/auth/login'),
+          headers: <String, String>{
+            'Content-Type': 'application/json',
+            'Authorization': 'asdasd'
+          },
+          body: jsonEncode(<String, String>{
+            'email': _email.text,
+            'password': _password.text
+          },
+          )
+      );
+    }catch(e){
+      return null;
+    }
     if(respose.statusCode == 200){
       print('Ok');
       return Token.fromJson(jsonDecode(respose.body));

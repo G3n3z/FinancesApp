@@ -8,10 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class SqlCategoryService {
@@ -104,7 +101,7 @@ public class SqlCategoryService {
         return insertRelationshipBetweenUserAndCategory(idCategory, idUser, connection);
     }
 
-    private boolean insertRelationshipBetweenUserAndCategory(Long idCategory, Long idUser, Connection connection) {
+    public boolean insertRelationshipBetweenUserAndCategory(Long idCategory, Long idUser, Connection connection) {
 
         String query = "INSERT INTO user_category(id_user, id_category)values (?, ?)";
         PreparedStatement stm = null;
@@ -197,5 +194,30 @@ public class SqlCategoryService {
 
 
 
+    }
+
+    public List<Category> getCategoriesByUserID(Long idUser, Connection connection) {
+        List<Category> categories = new ArrayList<>();
+
+        PreparedStatement stm = null;
+        String query = "Select * from Categories, user_category where user_category.id_user = ? and user_category.id_category = Categories.id_category";
+
+        try {
+            stm = connection.prepareStatement(query);
+            stm.setLong(1, idUser);
+            stm.execute();
+            ResultSet res = stm.getResultSet();
+            while (res.next()){
+                categories.add(getCategoryFromResultSet(res));
+            }
+
+        } catch (SQLException e) {
+            return null;
+        }finally {
+            if(stm != null)
+                ConnectionFactory.closeStatement(stm);
+        }
+
+        return categories;
     }
 }

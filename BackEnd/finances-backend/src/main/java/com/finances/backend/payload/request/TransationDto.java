@@ -13,6 +13,7 @@ public class TransationDto {
     private String category;
     private String account;
     private String data;
+    private String entity;
     private double amount;
 
 }

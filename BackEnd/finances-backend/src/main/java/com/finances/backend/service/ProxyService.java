@@ -8,6 +8,8 @@ import com.finances.backend.payload.response.GeneralResponse;
 import com.finances.backend.security.JwtTokenProvider;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -55,10 +57,15 @@ public class ProxyService {
 
     public GeneralResponse getClienteGeneral(String token, int year, int month) {
         Long idUser = tokenProvider.getIdByToken(token);
+        Calendar calendar = Calendar.getInstance();
         GeneralResponse response = new GeneralResponse();
         response.setAmountTotal(model.getAmountTotal(idUser));
         response.setCostsByCategories(model.getCostsByCategory(idUser, year, month));
         response.setCostsByAccount(model.getCostsByAccount(idUser, year, month));
+        response.setAccounts(model.getAccounts(idUser));
+        response.setCategories(model.getCategories(idUser));
+        response.setEntities(model.getEntities(idUser));
+        response.setTransactions(model.getTransactionWithSortAndPagination(month, year-1, "desc", "date", 30, 0 , idUser));
         return response;
     }
 
@@ -66,5 +73,10 @@ public class ProxyService {
         Long idUser = tokenProvider.getIdByToken(token);
         double total = model.getAmountTotal(idUser);
         return new AccountDto("total",total);
+    }
+
+    public List<AccountDto> getAccounts(String token) {
+        Long idUser = tokenProvider.getIdByToken(token);
+        return model.getAccounts(idUser);
     }
 }

@@ -1,5 +1,9 @@
 import 'package:finances/data/Data.dart';
+import 'package:finances/utils/DialogFunctions.dart';
+import 'package:finances/utils/RequestFunctions.dart';
 import 'package:flutter/material.dart';
+
+import '../data/Token.dart';
 
 class RegisterPage extends StatefulWidget{
 
@@ -14,10 +18,37 @@ class _RegisterPage extends State<RegisterPage>{
 
   final _email = TextEditingController();
   final _password = TextEditingController();
-  bool _validate = false;
+  final _name = TextEditingController();
+  String? _passwordErrorMessage = null;
+  String? _nameErrorMessage = null;
+  String? _emailErrorMessage = null;
 
-  void onRegist(){
+  void onRegist()async{
+    bool error = false;
+    if(_email.text.isEmpty){
+      setState(() =>  _emailErrorMessage = "Password is empty");
+
+      error = true;
+    }
+    if(_name.text.isEmpty){
+      setState(() =>  _nameErrorMessage = "Password is empty");
+      error = true;
+    }
+    if(_password.text.isEmpty){
+      setState(() => _passwordErrorMessage = "Password is empty");
+
+      error = true;
+    }
+    if(error){
+      return;
+    }
+    Token? token = await register(_email.text, _password.text, _name.text);
+    if(token == null){
+      showDialogError(context, "Email or Password invalid");
+      return;
+    }
     Data data = Data(_email.text, _password.text);
+    data.token = token;
     Navigator.of(context).pushNamed('/logged', arguments: data);
     //Navigator.of(context).pushNamed('/logged');
   }
@@ -26,6 +57,7 @@ class _RegisterPage extends State<RegisterPage>{
   void dispose() {
     _email.dispose();
     _password.dispose();
+    _name.dispose();
     super.dispose();
   }
 
@@ -47,23 +79,52 @@ class _RegisterPage extends State<RegisterPage>{
         Container(
           padding: const EdgeInsets.all(10),
           child: TextField(
-            controller: _email,
-            decoration: const InputDecoration(
+            controller: _name,
+            decoration:  InputDecoration(
                 border: OutlineInputBorder(),
-                labelText: 'User Name',
-                hintText: 'Enter valid mail id as abc@gmail.com'
+                labelText: 'Name',
+                hintText: 'Enter as valid name',
+                errorText: _nameErrorMessage
             ),
+            onChanged: (text) {
+              if(_nameErrorMessage != null){
+                setState(() => _nameErrorMessage = null);
+              }
+            },
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.all(10),
+          child: TextField(
+            controller: _email,
+            decoration:  InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'User Email',
+                hintText: 'Enter valid mail id as abc@gmail.com',
+                errorText: _emailErrorMessage
+            ),
+            onChanged: (text) {
+              if(_emailErrorMessage != null){
+                setState(() => _emailErrorMessage = null);
+              }
+            },
           ),
         ),
         Container(
           padding: const EdgeInsets.all(10),
           child: TextField(
             controller: _password,
-            decoration: const InputDecoration(
+            decoration:  InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Password',
-                hintText: 'Enter correct password'
+                hintText: 'Enter correct password',
+                errorText: (_passwordErrorMessage)
             ),
+            onChanged: (text) {
+              if(_passwordErrorMessage != null){
+                setState(() => _passwordErrorMessage = null);
+              }
+            },
           ),
         ),
         Container(
